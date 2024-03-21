@@ -42,7 +42,7 @@ python train.py --dataset nr-er
 
 To train the fully classical analog, set the transfer epoch to 0:
 ```
-python train.py --dataset nr-er --transfer_epoch -
+python train.py --dataset nr-er --transfer_epoch -0
 ```
 
 

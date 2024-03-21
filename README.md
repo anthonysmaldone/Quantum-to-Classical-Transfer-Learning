@@ -42,11 +42,11 @@ python train.py --dataset nr-er
 
 To train the fully classical analog, set the transfer epoch to 0:
 ```
-python train.py --dataset nr-er --transfer_epoch -0
+python train.py --dataset nr-er --transfer_epoch 0
 ```
 
 
 To train the hybrid model and derive the weights to continue training fully classical choose after which epoch the transfer occurs:
 ```
-python train.py --dataset nr-er --transfer_epoch -5
+python train.py --dataset nr-er --transfer_epoch 5
 ```

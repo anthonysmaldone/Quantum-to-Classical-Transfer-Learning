@@ -35,7 +35,7 @@ python train.py --h
 ```
 
 ## Example
-To train the hybrid network on the nr-er assay use:
+To train the quantum neural network on the nr-er assay use:
 ```
 python train.py --dataset nr-er
 ```

@@ -20,7 +20,7 @@ cd Quantum-to-Classical-Transfer-Learning
 
 Install the requirements with:
 ```
-pip install -r requirements.txt
+pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu118
 ```
 
 ## Usage

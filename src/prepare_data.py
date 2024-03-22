@@ -45,7 +45,7 @@ def prepare_dataloaders(batch_size, dataset, seed):
     y_test = torch.tensor(label_list[test_indices_shuffled], dtype=torch.float32)
     
     train_dataset = TensorDataset(data_tensor[train_indices_shuffled], y_train)
-    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
     
     test_dataset = TensorDataset(data_tensor[test_indices_shuffled], y_test)
     test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)

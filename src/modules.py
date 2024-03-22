@@ -17,14 +17,14 @@ class QuantumConvolution(nn.Module):
 
         self.QuantumLayer = nn.ModuleList()
         for _ in range(self.out_channels):
-            layer = quantum_layers.AmplitudeQuantumLayer(input_data_per_circuit=self.input_data_per_circuit, vqc_layers=vqc_layers).to(device)
+            layer = quantum_layers.AmplitudeQuantumLayer(input_data_per_circuit=self.input_data_per_circuit, vqc_layers=vqc_layers)
             self.QuantumLayer.append(layer)
         
         self.bias = bias
         if bias == True:
             # Mimic pytorch conv2d bias intialization 
             k = 1.0 / (in_channels * math.prod((filter_size, filter_size)))
-            self.QuantumLayerBias = nn.Parameter(torch.empty(out_channels).uniform_(-math.sqrt(k), math.sqrt(k))).to(device)
+            self.QuantumLayerBias = nn.Parameter(torch.empty(out_channels).uniform_(-math.sqrt(k), math.sqrt(k)))
 
 
     def forward(self, x):
@@ -42,7 +42,7 @@ class QuantumConvolution(nn.Module):
         unfolded = x.unfold(2, self.filter_size, self.strides).unfold(3, self.filter_size, self.strides)
         
         # unfolded shape: [batch_size, channels, output_height, output_width, filter_size, filter_size]
-        output_array = unfolded.permute(0, 2, 3, 1, 4, 5).flatten(start_dim=2).reshape(batch_size * output_height * output_width, -1).to(self.device)
+        output_array = unfolded.permute(0, 2, 3, 1, 4, 5).flatten(start_dim=2).reshape(batch_size * output_height * output_width, -1)
 
         # All-zeros vectors do not constitute a valid quantum state, however we know this inner product should produce 0
         # Save the indices so that the 0-valued inner-product may be reinserted later
@@ -109,4 +109,3 @@ class FilterNormalizationConv2DParallel(nn.Module):
             output += self.bias.view(1, self.out_channels, 1, 1)
         
         return output
-

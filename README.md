@@ -50,3 +50,9 @@ To train the hybrid model and derive the weights to continue training fully clas
 ```
 python train.py --dataset nr-er --transfer_epoch 5
 ```
+
+## Reproduce Paper Experiments
+To exactly reproduce all the works in this repository's corresponding research article, run the following command:
+```
+python reproduce_results.py
+```

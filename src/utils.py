@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+import torch.nn.init as init
 
 def normalize_tensors(tensor_batch, n):
     # L2 Normalize each 1D tensor in the batch
@@ -52,3 +53,28 @@ def remove_duplicates(tensor, device='cpu'):
 def repopulate_duplicates(processed_tensor, indices, original_shape):
     repopulated_tensor = processed_tensor[indices].view(original_shape)
     return repopulated_tensor
+
+def prepare_ablation(model):
+    transferred_state_dict = torch.load("./transferred_weights.pth")
+
+    conv_layer_weight_shape = transferred_state_dict['conv_layer.weight'].shape
+    conv_layer_bias_shape = transferred_state_dict['conv_layer.bias'].shape
+
+    # Initialize parameters akin to torch's default method
+    fan_in = conv_layer_weight_shape[1] * conv_layer_weight_shape[2] * conv_layer_weight_shape[3]
+    k_weight = 1 / torch.sqrt(torch.tensor(fan_in))
+
+    new_weights = torch.empty(conv_layer_weight_shape)
+    init.uniform_(new_weights, -k_weight.item(), k_weight.item())
+
+    k_bias = 1 / torch.sqrt(torch.tensor(conv_layer_weight_shape[0]))
+
+    new_bias = torch.empty(conv_layer_bias_shape)
+    init.uniform_(new_bias, -k_bias.item(), k_bias.item())
+
+    transferred_state_dict['conv_layer.weight'] = new_weights
+    transferred_state_dict['conv_layer.bias'] = new_bias
+
+    model.load_state_dict(transferred_state_dict)
+    
+    return model

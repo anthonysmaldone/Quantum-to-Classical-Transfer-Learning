@@ -4,7 +4,6 @@ import pandas as pd
 from tqdm import tqdm
 from typing import Any
 import numpy as np
-from rdkit import Chem
 
 def encode_smiles(smiles: str, maximum_smiles_len: int) -> Any:
     mol = Chem.MolFromSmiles(smiles) 
